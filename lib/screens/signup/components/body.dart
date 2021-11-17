@@ -20,28 +20,31 @@ class _BodyState extends State<Body> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  bool validation(){
-    if(usernameController.text.isEmpty){
+  bool validation() {
+    if (usernameController.text.isEmpty) {
       return false;
     }
-    if(emailController.text.isEmpty){
+    if (emailController.text.isEmpty) {
       return false;
     }
-    if(passwordController.text.isEmpty){
+    if (passwordController.text.isEmpty) {
       return false;
     }
     return true;
   }
 
-  void doRegister()async{
-    if(validation()){
-      
-     var registerResult = await context.read<AuthProvider>().register(usernameController.text,emailController.text,passwordController.text);
-     Navigator.push(context,MaterialPageRoute(builder: (context){return Dashboard();}));
-    }else{
-     Flushbar(
-        message:
-            "Please complate the form",
+  void doRegister() async {
+    if (validation()) {
+      var registerResult = await context.read<AuthProvider>().register(
+          usernameController.text,
+          emailController.text,
+          passwordController.text);
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return Dashboard();
+      }));
+    } else {
+      Flushbar(
+        message: "Please complate the form",
         icon: Icon(
           Icons.info_outline,
           size: 28.0,
@@ -87,13 +90,9 @@ class _BodyState extends State<Body> {
                 ),
               ),
               SizedBox(height: 20),
-              Positioned(
-                bottom: 0,
-                left: 0,
-                child: SvgPicture.asset(
-                  "assets/icons/image.svg",
-                  width: size.width * 0.60,
-                ),
+              SvgPicture.asset(
+                "assets/icons/image.svg",
+                width: size.width * 0.60,
               ),
               SizedBox(
                 height: 20,

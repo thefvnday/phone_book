@@ -6,6 +6,7 @@ import 'package:phone_book/screens/components/dashboard.dart';
 import 'package:phone_book/screens/signup/sign_up.dart';
 import 'package:phone_book/utility/validator.dart';
 import 'package:provider/src/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -16,6 +17,8 @@ class _BodyState extends State<Body> {
   final formkey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  
 
   void doLogin() async {
     var loginResult = await context
@@ -80,13 +83,9 @@ class _BodyState extends State<Body> {
               ),
             ),
             SizedBox(height: 20),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              child: SvgPicture.asset(
-                "assets/icons/image.svg",
-                width: size.width * 0.60,
-              ),
+            SvgPicture.asset(
+              "assets/icons/image.svg",
+              width: size.width * 0.60,
             ),
             SizedBox(
               height: 20,

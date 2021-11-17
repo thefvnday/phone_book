@@ -4,7 +4,7 @@ import 'package:phone_book/constants.dart';
 
 
 class MyContact extends StatelessWidget {
-  
+  static String routeName="/my_contact";
   const MyContact({ Key? key }) : super(key: key);
 
   @override

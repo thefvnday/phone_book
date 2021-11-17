@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 
-
-
-
 class AuthProvider extends ChangeNotifier{
   // Status _loggedInStatus = Status.NotLoggedI;
   // Status _registeredInStatus = Status.NotRegistered;
@@ -29,6 +26,7 @@ class AuthProvider extends ChangeNotifier{
     };
     try {   
      var response = await Dio().post('https://phone-book-api.herokuapp.com/api/v1/signup', data: apiBodyData );
+     print(response);
      return response;
     } catch (e) {
       throw e;
