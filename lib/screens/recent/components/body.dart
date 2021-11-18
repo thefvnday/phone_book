@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:phone_book/screens/components/header.dart';
 import 'package:phone_book/screens/components/search_field.dart';
+import 'package:phone_book/utility/preference.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class Body extends StatelessWidget {
@@ -24,6 +26,12 @@ class Body extends StatelessWidget {
                     text: 'Recent',
                     press: () {},
                   ),
+                  IconButton(
+                      onPressed: () {
+                        //  Navigator.pushNamed(context, createAccount.routeName);
+                      },
+                      icon: Icon(Icons.logout)
+                    )
                 ],
               ),
               SizedBox(height: 10,),

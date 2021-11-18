@@ -1,14 +1,23 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:phone_book/data/repository/repo_contact.dart';
+import 'package:phone_book/domain/contact.dart';
+import 'package:phone_book/utility/preference.dart';
+import 'package:provider/provider.dart';
 
+class ContactProvider with ChangeNotifier {
+  List<Contact> allContacts = [];
 
-class ContactProvider with ChangeNotifier{
-  
-//   void getHttp() async {
-//   try {
-//     var response = await Dio().get('http://www.google.com');
-//     print(response);
-//   } catch (e) {
-//     print(e);
-//   }
-// }
+  void getAllContact() async {
+    try {
+      List<Contact> dataContact = await RepoContact().getAllContact();
+      //  return allContact;
+      allContacts = dataContact;
+      notifyListeners();
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

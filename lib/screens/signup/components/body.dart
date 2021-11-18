@@ -104,12 +104,12 @@ class _BodyState extends State<Body> {
                     child: TextFormField(
                       controller: usernameController,
                       autofocus: false,
-                      validator: (value) {
-                        if (value!.isEmpty ||
-                            !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
-                          return "Enter correct name";
-                        }
-                      },
+                      // validator: (value) {
+                      //   if (value!.isEmpty ||
+                      //       !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+                      //     return "Enter correct name";
+                      //   }
+                      // },
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
@@ -136,7 +136,7 @@ class _BodyState extends State<Body> {
                 child: TextFormField(
                   controller: emailController,
                   autofocus: false,
-                  validator: validateEmail,
+                  // validator: validateEmail,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
@@ -161,12 +161,12 @@ class _BodyState extends State<Body> {
                   controller: passwordController,
                   autofocus: false,
                   obscureText: true,
-                  validator: (value) {
-                    if (value!.isEmpty ||
-                        !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
-                      return "Enter Your Password";
-                    }
-                  },
+                  // validator: (value) {
+                  //   if (value!.isEmpty ||
+                  //       !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+                  //     return "Enter Your Password";
+                  //   }
+                  // },
                   keyboardType: TextInputType.visiblePassword,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(

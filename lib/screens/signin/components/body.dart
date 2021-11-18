@@ -20,8 +20,8 @@ class _BodyState extends State<Body> {
 
   
 
-  void doLogin() async {
-    var loginResult = await context
+  void doLogin() {
+    context
         .read<AuthProvider>()
         .login(emailController.text, passwordController.text);
     Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -95,7 +95,7 @@ class _BodyState extends State<Body> {
               child: TextFormField(
                 controller: emailController,
                 autofocus: false,
-                validator: validateEmail,
+                // validator: validateEmail,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
@@ -120,8 +120,8 @@ class _BodyState extends State<Body> {
                 controller: passwordController,
                 autofocus: false,
                 obscureText: true,
-                validator: (value) =>
-                    value!.isEmpty ? "Please enter passwor" : null,
+                // validator: (value) =>
+                //     value!.isEmpty ? "Please enter passwor" : null,
                 keyboardType: TextInputType.visiblePassword,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(

@@ -1,22 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:phone_book/utility/preference.dart';
 
-
-class CreateContact extends ChangeNotifier{
-  Future<Response<dynamic>> create_contact(String name, String phone,String job, String company, String email)async{
-    final Map<String,dynamic> apiBodyData ={
+class CreateContact extends ChangeNotifier {
+  Future<Response<dynamic>> createContact(String name, String phone,
+      String job, String company, String email) async {
+    final Map<String, dynamic>? apiBodyData = {
       "name": name,
-      "phone" : phone,
-      "job" : job,
+      "phone": phone,
+      "job": job,
       "company": company,
       "email": email,
-
     };
-    try {   
-     var response = await Dio().post('https://phone-book-api.herokuapp.com/api/v1/contacts', data: apiBodyData );
-     return response;
+    try {
+      SharedPreferenceHelper helper = SharedPreferenceHelper();
+      var token = helper
+        ..getTokenLogin();
+        Dio  dio = Dio();
+        dio.options.headers['Authorization'] = "Bearer $token";
+      var response = await dio.post(
+          'https://phone-book-api.herokuapp.com/api/v1/contacts',
+          data: apiBodyData);
+      print(response);
+      return response;
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }
