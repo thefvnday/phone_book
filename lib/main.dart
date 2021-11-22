@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:phone_book/providers/auth_provider.dart';
+import 'package:phone_book/providers/contact_id_provider.dart';
 import 'package:phone_book/providers/contact_provider.dart';
 import 'package:phone_book/providers/create_contact_provider.dart';
+import 'package:phone_book/screens/signin/sign_in.dart';
 import 'package:phone_book/screens/welcome/welcome.dart';
 import 'package:phone_book/routes.dart';
 import 'package:provider/provider.dart';
@@ -22,14 +24,15 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider( create: (context)=>AuthProvider()),
         ChangeNotifierProvider(create:(context)=>CreateContact ()),
-        ChangeNotifierProvider(create: (context)=>ContactProvider())
+        ChangeNotifierProvider(create: (context)=>ContactProvider()),
+        ChangeNotifierProvider(create: (context)=>ContactByIdProvider())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Phone Book',
         theme: ThemeData(  
         ),
-       initialRoute: WelcomeScreen.routeName,
+       initialRoute:  SignInScreen.routeName,
        routes:  routes,
       ),
     );

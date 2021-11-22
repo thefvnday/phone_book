@@ -3,26 +3,41 @@ class User {
     User({
         required this.id,
         required this.name,
+        required this.phone,
+        required this.job,
+        required this.company,
+        required this.image,
         required this.email,
-        required this.token,
     });
 
     int id;
     String name;
+    String phone;
+    String job;
+    String company;
+    String image;
     String email;
-    String token;
 
     factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
         name: json["name"],
+        phone: json["phone"],
+        job: json["job"],
+        company: json["company"],
+        image: json["image"],
         email: json["email"],
-        token: json["token"],
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
+        "phone": phone,
+        "job": job,
+        "company": company,
+        "image": image,
         "email": email,
-        "token": token,
     };
+    // static List<User> userId(Map data){
+    //   return data.map((user) => User.fromJson(user)).toString();
+    // }
 }

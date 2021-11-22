@@ -1,10 +1,18 @@
+
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:phone_book/screens/signin/sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferenceHelper {
 //  final SharedPreferences sharedPreferences;
 //  SharedPreferenceHelper(this.sharedPreferences);
 
-  void saveTokenLogin(String token) async {
+
+
+  // Token Login
+   saveTokenLogin(String token) async {
     var sharedPreferences = await SharedPreferences.getInstance();
 
     sharedPreferences.setString("tokenlogin", token);
@@ -13,7 +21,9 @@ class SharedPreferenceHelper {
   Future<String> getTokenLogin() async {
     try {
       var sharedPreferences = await SharedPreferences.getInstance();
-      var token = sharedPreferences.getString('tokenlogin');
+      String? token = sharedPreferences.getString('tokenlogin');
+
+      
 
       if (token == null) {
         throw Exception();
@@ -21,15 +31,27 @@ class SharedPreferenceHelper {
 
       return token;
     } catch (e) {
-      print("---------------ERROR------------");
+      print("---------------ERROR1------------");
     }
     return "";
     // return sharedPreferences.getString("tokenlogin");
   }
 
+  void autoLogin()async{
+     SharedPreferences prefs = await SharedPreferences.getInstance();
+     String? token = prefs.getString('token');
+     if(token !=null){
+       print(token);
+       
+     }
+  }
+
+  //Token All Contact
   void setTokenContact(String kontaktoken) async {
     var sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString('tokenkontak', kontaktoken);
+    sharedPreferences.setString('tokenkontak', kontaktoken).then((value) {
+      Timer(Duration(seconds: 2),()=>autoLogin());
+    });
   }
 
   Future<String>getTokenContact()async{
@@ -47,10 +69,34 @@ class SharedPreferenceHelper {
     }
     return "";
   }
-}
-//   Future<SharedPreferenceHelper>init()async{
-     
-//      return SharedPreferenceHelper(sharedPreferences);
+
+
+  //Token Contact by Id
+   void setTokenById(String kontaktoken) async {
+    var sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString('tokenid', kontaktoken);
+  }
+
+  Future<String>getTokenById()async{
+    try {
+      var sharedPreferences = await SharedPreferences.getInstance();
+      var token = sharedPreferences.getString('tokenid');
+
+      if (token == null) {
+        throw Exception();
+      }
+
+      return token;
+    } catch (e) {
+      print("---------------ERROR------------");
+    }
+    return "";
+  }
+//     Future<SharedPreferenceHelper>init()async{
+//      if(sharedPreferences)
+//     return SharedPreferenceHelper(sharedPreferences);
 //  }
+}
+// 
 
  

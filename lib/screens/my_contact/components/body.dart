@@ -37,13 +37,10 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   @override
- 
-
-  @override
   Widget build(BuildContext context) {
     context.read<ContactProvider>().getAllContact();
     return Padding(
-      padding: const EdgeInsets.only(top: 40, left: 27, right: 24, bottom: 5),
+      padding: const EdgeInsets.only(top: 40, left: 24, right: 24),
       child: Column(
         children: [
           // Center(child: Text('', style: TextStyle(fontSize: 1))),
@@ -70,28 +67,34 @@ class _BodyState extends State<Body> {
                 print("LENGTH ${dataContact.length} ");
                 return ListView.builder(
                   itemBuilder: (context, index) {
-                    return ListTile(
-                        trailing: Icon(Icons.settings),
-                        leading: CircleAvatar(
-                          backgroundImage:
-                              NetworkImage('${dataContact[index].image}'),
-                          radius: 20,
-                        ),
-                        title: Text('${dataContact[index].name}'),
-                        subtitle: Text('${dataContact[index].phone}'));
-                        
-                  },  
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, Account.routeName,
+                            arguments: dataContact[index]);
+                      },
+                      child: ListTile(
+                          trailing: Icon(Icons.settings),
+                          leading: CircleAvatar(
+                            backgroundImage:
+                                NetworkImage('${dataContact[index].image}'),
+                            radius: 20,
+                          ),
+                          title: Text('${dataContact[index].name}'),
+                          subtitle: Text('${dataContact[index].phone}')),
+                    );
+                  },
                   itemCount: dataContact.length,
                 );
               },
             ),
           ),
-          // 
+          //
         ],
       ),
     );
   }
 
+  // Ada yang ketumpuk jadi data ga muncul jadi pakai list tile
   Widget _rowContact(
           {required String name,
           required String phone,

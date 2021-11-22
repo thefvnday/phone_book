@@ -1,6 +1,5 @@
 
 class Contact {
-  
     Contact({
         required this.id,
         required this.name,

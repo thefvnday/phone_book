@@ -1,15 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:phone_book/screens/components/header.dart';
 import 'package:phone_book/screens/components/search_field.dart';
+import 'package:phone_book/screens/welcome/welcome.dart';
 import 'package:phone_book/utility/preference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   const Body({ Key? key }) : super(key: key);
 
   @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  @override
   Widget build(BuildContext context) {
+  //   Future Logout()async{
+  //   //  SharedPreferenceHelper KeyHelper = SharedPreferenceHelper();
+  //    final KeyHelper = await SharedPreferences.getInstance();
+  //    final token = KeyHelper.getString('token') ?? " ";
+
+  //    if(token != "0"){
+  //      print(token);
+  //      Navigator.of(context).push(MaterialPageRoute(
+  //       builder: (context) {
+  //         return WelcomeScreen();
+  //       },
+  //     ));
+  //    }
+  // }
     return Center(
         child: Column(
       children: [

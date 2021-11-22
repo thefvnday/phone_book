@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:phone_book/screens/welcome/components/body.dart';
 import 'package:phone_book/constants.dart';
+import 'package:phone_book/utility/preference.dart';
 
 class WelcomeScreen extends StatelessWidget {
    static String routeName="/welcome";
@@ -9,6 +10,7 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  
     return Scaffold(
       backgroundColor: primaryColor,
       body: Body(),

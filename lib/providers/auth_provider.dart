@@ -1,10 +1,8 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:phone_book/utility/preference.dart';
-import 'package:phone_book/utility/preference.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class AuthProvider extends ChangeNotifier {
   // Status _loggedInStatus = Status.NotLoggedI;
@@ -57,6 +55,8 @@ class AuthProvider extends ChangeNotifier {
       print("_TOKEN-------------$token----------}");
       SharedPreferenceHelper helper = SharedPreferenceHelper();
       helper.setTokenContact(token);
+      // helper.saveTokenLogin(token;)
+
     } catch (e) {
       throw e;
     }

@@ -1,6 +1,13 @@
+
+
+import 'dart:io';
+
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:phone_book/constants.dart';
+import 'package:phone_book/providers/contact_provider.dart';
 import 'package:phone_book/providers/create_contact_provider.dart';
 import 'package:phone_book/screens/account/account.dart';
 import 'package:phone_book/screens/my_contact/my_contact.dart';
@@ -14,6 +21,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  
   final createkey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
@@ -21,37 +29,52 @@ class _BodyState extends State<Body> {
   TextEditingController companyController = TextEditingController();
   TextEditingController emailController = TextEditingController();
 
+  File? image;
+  Future pickImage(ImageSource source)async{
+    try {
+      final image = await ImagePicker().pickImage(source:source);
+    if (image == null) return;
 
-  bool validation(){
-    if(nameController.text.isEmpty){
+    final imageTemporary = File(image.path);
+    setState(() => this.image= imageTemporary);
+    print('ERRROR');
+    }on PlatformException catch (e) {
+      print('Failed to pick image : $e');
+    }
+    
+  } 
+
+  bool validation() {
+    if (nameController.text.isEmpty) {
       return false;
     }
-    if(phoneController.text.isEmpty){
+    if (phoneController.text.isEmpty) {
       return false;
     }
-    if(jobController.text.isEmpty){
+    if (jobController.text.isEmpty) {
       return false;
     }
-    if(companyController.text.isEmpty){
+    if (companyController.text.isEmpty) {
       return false;
     }
-    if(emailController.text.isEmpty){
+    if (emailController.text.isEmpty) {
       return false;
     }
     return true;
   }
-  void doCreate()async{
-    if(validation()){
-      var createResult =  context.read<CreateContact>().createContact(
+
+  void doCreate() async {
+    if (validation()) {
+      var createResult = await context.read<CreateContact>().createContact(
           nameController.text,
           phoneController.text,
           jobController.text,
           companyController.text,
           emailController.text);
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return Account();
-      }));
-    }else{
+      // context.read<ContactProvider>().allContacts.add(createResult);
+      context.read<ContactProvider>().getAllContact();
+      Navigator.pop(context);
+    } else {
       Flushbar(
         message: "Please complate ",
         icon: Icon(
@@ -63,21 +86,19 @@ class _BodyState extends State<Body> {
         leftBarIndicatorColor: Colors.blue[300],
       ).show(context);
     }
-
   }
 
   @override
   Widget build(BuildContext context) {
-   Size size = MediaQuery.of(context).size;
-    return ListView(
-      children:[ 
-        Form(
+    Size size = MediaQuery.of(context).size;
+    return ListView(children: [
+      Form(
         key: createkey,
         child: Container(
           padding: EdgeInsets.only(top: 40),
           child: Column(
             children: [
-              Padding(
+              image !=null ? Image.file(image!,width: size.width*0.5,height: size.height*0.2,fit:BoxFit.cover) : Padding(
                 padding: const EdgeInsets.fromLTRB(40, 10, 40, 25),
                 child: Container(
                   width: size.width*0.5,
@@ -94,12 +115,14 @@ class _BodyState extends State<Body> {
                       borderRadius: BorderRadius.circular(20)),
                 ),
               ),
+              GestureDetector(onTap:()=>pickImage(ImageSource.gallery),child: Icon(Icons.photo)),
+              SizedBox(height: 10,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: size.width*0.84,
-                    height:size.height*0.08,
+                    width: size.width * 0.84,
+                    height: size.height * 0.08,
                     decoration: BoxDecoration(color: secondaryLightColor),
                     child: TextFormField(
                       controller: nameController,
@@ -125,8 +148,8 @@ class _BodyState extends State<Body> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: size.width*0.40,
-                    height:size.height*0.08,
+                    width: size.width * 0.40,
+                    height: size.height * 0.08,
                     decoration: BoxDecoration(color: secondaryLightColor),
                     child: TextFormField(
                       autofocus: false,
@@ -147,8 +170,8 @@ class _BodyState extends State<Body> {
                     width: 10,
                   ),
                   Container(
-                    width: size.width*0.40,
-                    height:size.height*0.08,
+                    width: size.width * 0.40,
+                    height: size.height * 0.08,
                     decoration: BoxDecoration(color: secondaryLightColor),
                     child: TextField(
                       controller: emailController,
@@ -173,8 +196,8 @@ class _BodyState extends State<Body> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: size.width*0.40,
-                    height:size.height*0.08,
+                    width: size.width * 0.40,
+                    height: size.height * 0.08,
                     decoration: BoxDecoration(color: secondaryLightColor),
                     child: TextField(
                       controller: companyController,
@@ -194,8 +217,8 @@ class _BodyState extends State<Body> {
                     width: 10,
                   ),
                   Container(
-                    width: size.width*0.40,
-                    height:size.height*0.08,
+                    width: size.width * 0.40,
+                    height: size.height * 0.08,
                     decoration: BoxDecoration(color: secondaryLightColor),
                     child: TextField(
                       controller: jobController,
@@ -231,7 +254,6 @@ class _BodyState extends State<Body> {
           ),
         ),
       ),
-      ]
-    );
+    ]);
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:phone_book/providers/auth_provider.dart';
 import 'package:phone_book/screens/components/dashboard.dart';
+import 'package:phone_book/screens/signin/sign_in.dart';
 import 'package:phone_book/screens/signup/sign_up.dart';
 import 'package:phone_book/utility/validator.dart';
 import 'package:provider/src/provider.dart';
@@ -14,27 +15,31 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  final formkey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+final formkey = GlobalKey<FormState>();
+TextEditingController emailController = TextEditingController();
+TextEditingController passwordController = TextEditingController();
+  bool validation() {
+    if (emailController.text.isEmpty) {
+      return false;
+    } 
+    if (passwordController.text.isEmpty){
+      return false;
+    }
+    return true;
+  }
 
-  
+  void doLogin()async {
+    
 
-  void doLogin() {
-    context
-        .read<AuthProvider>()
-        .login(emailController.text, passwordController.text);
+    if (validation()) {
+     var createResult = context.read<AuthProvider>().login(
+      emailController.text,
+      passwordController.text
+    );
+        
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return Dashboard();
     }));
-
-    if (validation()) {
-      context
-          .read<AuthProvider>()
-          .login(emailController.text, passwordController.text);
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return Dashboard();
-      }));
     } else {
       Flushbar(
         message: "Please complate the form",
@@ -93,6 +98,7 @@ class _BodyState extends State<Body> {
             Padding(
               padding: const EdgeInsets.only(right: 30, left: 30),
               child: TextFormField(
+                validator: validateEmail,
                 controller: emailController,
                 autofocus: false,
                 // validator: validateEmail,
@@ -120,8 +126,8 @@ class _BodyState extends State<Body> {
                 controller: passwordController,
                 autofocus: false,
                 obscureText: true,
-                // validator: (value) =>
-                //     value!.isEmpty ? "Please enter passwor" : null,
+                validator: (value) =>
+                    value!.isEmpty ? "Please enter passwor" : null,
                 keyboardType: TextInputType.visiblePassword,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
@@ -160,11 +166,5 @@ class _BodyState extends State<Body> {
     );
   }
 
-  bool validation() {
-    if (formkey.currentState!.validate()) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+ 
 }
