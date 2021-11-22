@@ -15,31 +15,28 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-final formkey = GlobalKey<FormState>();
-TextEditingController emailController = TextEditingController();
-TextEditingController passwordController = TextEditingController();
+  final formkey = GlobalKey<FormState>();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   bool validation() {
     if (emailController.text.isEmpty) {
       return false;
-    } 
-    if (passwordController.text.isEmpty){
+    }
+    if (passwordController.text.isEmpty) {
       return false;
     }
     return true;
   }
 
-  void doLogin()async {
-    
-
+  void doLogin() async {
     if (validation()) {
-     var createResult = context.read<AuthProvider>().login(
-      emailController.text,
-      passwordController.text
-    );
-        
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return Dashboard();
-    }));
+      var createResult = context
+          .read<AuthProvider>()
+          .login(emailController.text, passwordController.text);
+
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return Dashboard();
+      }));
     } else {
       Flushbar(
         message: "Please complate the form",
@@ -62,8 +59,7 @@ TextEditingController passwordController = TextEditingController();
       child: Form(
         key: formkey,
         child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center, children: [
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Padding(
               padding: const EdgeInsets.only(top: 70),
               child: Row(
@@ -165,6 +161,4 @@ TextEditingController passwordController = TextEditingController();
       ),
     );
   }
-
- 
 }

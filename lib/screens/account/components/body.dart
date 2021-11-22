@@ -1,7 +1,11 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:phone_book/constants.dart';
+import 'package:phone_book/data/repository/repo_contact_by_id.dart';
 import 'package:phone_book/domain/contact.dart';
 import 'package:phone_book/providers/contact_id_provider.dart';
+import 'package:phone_book/providers/create_contact_provider.dart';
 import 'package:phone_book/screens/my_contact/my_contact.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/src/provider.dart';
@@ -12,6 +16,12 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  // void doDelete(){
+  //   context.read<RepoContactById>().deleteContactById;
+    
+  // }
+
+
   @override
   Widget build(BuildContext context) {
     var contact = ModalRoute.of(context)!.settings.arguments as Contact;
@@ -118,7 +128,12 @@ class _BodyState extends State<Body> {
                   Row(
                     children: [
                       ElevatedButton(
-                        onPressed: (){},
+                        onPressed: () {
+                          // Navigator.push(context,
+                          //     MaterialPageRoute(builder: (context) {
+                          //   return UpdateAccount();
+                          // }));
+                        },
                         child: const Text(
                           'Update',
                           textAlign: TextAlign.center,
@@ -128,9 +143,13 @@ class _BodyState extends State<Body> {
                           padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
                         ),
                       ),
-                      SizedBox(width: 5,),
+                      SizedBox(
+                        width: 5,
+                      ),
                       ElevatedButton(
-                        onPressed: (){},
+                        onPressed: (){ context.read<ContactByIdProvider>().deleteContact(contact.id);
+                         Navigator.pop(context);
+                        },
                         child: const Text(
                           'Delete',
                           textAlign: TextAlign.center,

@@ -1,5 +1,3 @@
-
-
 import 'dart:io';
 
 import 'package:another_flushbar/flushbar.dart';
@@ -21,28 +19,26 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  
   final createkey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController jobController = TextEditingController();
   TextEditingController companyController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-
+  TextEditingController imageController = TextEditingController();
   File? image;
-  Future pickImage(ImageSource source)async{
+  Future pickImage(ImageSource source) async {
     try {
-      final image = await ImagePicker().pickImage(source:source);
-    if (image == null) return;
+      final image = await ImagePicker().pickImage(source: source);
+      if (image == null) return;
 
-    final imageTemporary = File(image.path);
-    setState(() => this.image= imageTemporary);
-    print('ERRROR');
-    }on PlatformException catch (e) {
+      final imageTemporary = File(image.path);
+      setState(() => this.image = imageTemporary);
+      print('ERRROR');
+    } on PlatformException catch (e) {
       print('Failed to pick image : $e');
     }
-    
-  } 
+  }
 
   bool validation() {
     if (nameController.text.isEmpty) {
@@ -70,7 +66,10 @@ class _BodyState extends State<Body> {
           phoneController.text,
           jobController.text,
           companyController.text,
-          emailController.text);
+          emailController.text,
+          imageController.text
+          );
+
       // context.read<ContactProvider>().allContacts.add(createResult);
       context.read<ContactProvider>().getAllContact();
       Navigator.pop(context);
@@ -98,25 +97,35 @@ class _BodyState extends State<Body> {
           padding: EdgeInsets.only(top: 40),
           child: Column(
             children: [
-              image !=null ? Image.file(image!,width: size.width*0.5,height: size.height*0.2,fit:BoxFit.cover) : Padding(
-                padding: const EdgeInsets.fromLTRB(40, 10, 40, 25),
-                child: Container(
-                  width: size.width*0.5,
-                  height: size.height*0.2,
-                  child: ClipOval(
-                    child: Icon(
-                      Icons.person_sharp,
-                      color: Colors.black,
-                      size: 140,
+              image != null
+                  ? Image.file(image!,
+                      width: size.width * 0.5,
+                      height: size.height * 0.2,
+                      fit: BoxFit.cover,
+                      )
+                  : Padding(
+                      padding: const EdgeInsets.fromLTRB(40, 10, 40, 25),
+                      child: Container(
+                        width: size.width * 0.5,
+                        height: size.height * 0.2,
+                        child: ClipOval(
+                          child: Icon(
+                            Icons.person_sharp,
+                            color: Colors.black,
+                            size: 140,
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(20)),
+                      ),
                     ),
-                  ),
-                  decoration: BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.circular(20)),
-                ),
+              GestureDetector(
+                  onTap: () => pickImage(ImageSource.gallery),
+                  child: Icon(Icons.photo)),
+              SizedBox(
+                height: 10,
               ),
-              GestureDetector(onTap:()=>pickImage(ImageSource.gallery),child: Icon(Icons.photo)),
-              SizedBox(height: 10,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

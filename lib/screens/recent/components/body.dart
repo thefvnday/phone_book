@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:phone_book/providers/auth_provider.dart';
 import 'package:phone_book/screens/components/header.dart';
 import 'package:phone_book/screens/components/search_field.dart';
 import 'package:phone_book/screens/welcome/welcome.dart';
 import 'package:phone_book/utility/preference.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -47,9 +49,8 @@ class _BodyState extends State<Body> {
                     press: () {},
                   ),
                   IconButton(
-                      onPressed: () {
-                        //  Navigator.pushNamed(context, createAccount.routeName);
-                      },
+                      onPressed: () => Provider.of<AuthProvider>(context,listen: false).logout(),
+                      
                       icon: Icon(Icons.logout)
                     )
                 ],

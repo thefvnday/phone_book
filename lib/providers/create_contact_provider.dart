@@ -8,13 +8,14 @@ import 'package:phone_book/utility/preference.dart';
 
 class CreateContact extends ChangeNotifier {
   Future<Contact> createContact(String name, String phone, String job,
-      String company, String email) async {
+      String company, String email, String image) async {
     final Map<String, dynamic>? apiBodyData = {
       "name": name,
       "phone": phone,
       "job": job,
       "company": company,
       "email": email,
+      "image": image,
     };
     try {
       SharedPreferenceHelper helper = SharedPreferenceHelper();
@@ -35,7 +36,6 @@ class CreateContact extends ChangeNotifier {
   }
 
 
-  
  
 
   

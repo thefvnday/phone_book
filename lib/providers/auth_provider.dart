@@ -55,10 +55,15 @@ class AuthProvider extends ChangeNotifier {
       print("_TOKEN-------------$token----------}");
       SharedPreferenceHelper helper = SharedPreferenceHelper();
       helper.setTokenContact(token);
-      // helper.saveTokenLogin(token;)
+      // helper.saveTokenLogin(token);
 
     } catch (e) {
       throw e;
     }
+  }
+
+  void logout(){
+    email : null;
+    password : null;
   }
 }
